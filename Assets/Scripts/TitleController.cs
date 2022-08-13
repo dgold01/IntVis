@@ -13,7 +13,8 @@ public class TitleController : MonoBehaviour
     public float _attractionForce;
     // Start is called before the first frame update
     void Start()
-    {   _balls = new GameObject[_titleObjects.transform.childCount];
+    {   
+        _balls = new GameObject[_titleObjects.transform.childCount];
         for (int i = 0; i < _balls.Length; i++)
         {
             
