@@ -12,7 +12,7 @@ public class collider : MonoBehaviour
         {
           
            
-            _hasreached = true;
+            _hasreached = false;
         }
     }
     public bool _hasreachedvalue()
