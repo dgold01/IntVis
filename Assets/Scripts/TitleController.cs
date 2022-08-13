@@ -7,7 +7,7 @@ using UnityEngine;
 public class TitleController : MonoBehaviour
 {
 
-    
+    public GameObject SphereParent;
     GameObject[] _balls;
     public GameObject ObjectToSpawn;
     float _xSpacing;
@@ -24,6 +24,7 @@ public class TitleController : MonoBehaviour
             
             GameObject newball = Instantiate(ObjectToSpawn);
             _balls[i] = newball;
+            newball.transform.parent = SphereParent.transform;
             newball.transform.position = new Vector3(i,i,i);
            
             
@@ -34,7 +35,7 @@ public class TitleController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         for (int i = 0; i < _balls.Length; i++)
         {
@@ -43,7 +44,7 @@ public class TitleController : MonoBehaviour
             bool _hasreached = _titleObjects.transform.GetChild(i).GetComponent<collider>()._hasreachedvalue();
             if (_hasreached == true) 
             {
-                _balls[i].GetComponent<Rigidbody>().velocity= new Vector3(0,0,0);
+                _balls[i].GetComponent<Rigidbody>().velocity = forcedirection *0.5f;
 
             }
             else
