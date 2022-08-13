@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Audio
+  - Canvas0
+  - Mouse
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Volume
   - Water
   - UI
   - 
