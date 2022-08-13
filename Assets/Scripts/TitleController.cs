@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class TitleController : MonoBehaviour
 {
+
+    
     GameObject[] _balls;
     public GameObject ObjectToSpawn;
     float _xSpacing;
     float _ySpacing;
+    public float _maxMagnitude;
     public GameObject _titleObjects;
     public float _attractionForce;
     // Start is called before the first frame update
@@ -20,6 +24,7 @@ public class TitleController : MonoBehaviour
             
             GameObject newball = Instantiate(ObjectToSpawn);
             _balls[i] = newball;
+            newball.transform.position = new Vector3(i,i,i);
            
             
            
@@ -33,14 +38,30 @@ public class TitleController : MonoBehaviour
     {
         for (int i = 0; i < _balls.Length; i++)
         {
-
-           
             Vector3 targetVec = _titleObjects.transform.GetChild(i).transform.position;
-            _balls[i].GetComponent<Rigidbody>().AddForce((-(_balls[i].transform.position) + targetVec) * _attractionForce);
+            Vector3 forcedirection = -_balls[i].transform.position + targetVec;
+            bool _hasreached = _titleObjects.transform.GetChild(i).GetComponent<collider>()._hasreachedvalue();
+            if (_hasreached == true) 
+            {
+                _balls[i].GetComponent<Rigidbody>().velocity= new Vector3(0,0,0);
+
+            }
+            else
+            {
+
+                _balls[i].GetComponent<Rigidbody>().AddForce(forcedirection * _attractionForce);
+            }
+            
+           
+            if (_balls[i].GetComponent<Rigidbody>().velocity.magnitude > _maxMagnitude)
+            {
+                _balls[i].GetComponent<Rigidbody>().velocity = _balls[i].GetComponent<Rigidbody>().velocity.normalized * _maxMagnitude;
+            }
 
 
 
 
         }
     }
+    
 }
