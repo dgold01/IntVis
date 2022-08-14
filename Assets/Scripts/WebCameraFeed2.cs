@@ -25,6 +25,7 @@ public class WebCameraFeed2 : MonoBehaviour
     public float _timeDelay;
     bool[] isLerping;
     bool _isLerpingAll;
+    public int _numberOfQuads;
 
     public float _Speed;
     [Header("3D Settings")]
@@ -36,7 +37,7 @@ public class WebCameraFeed2 : MonoBehaviour
 
     void Start()
     {
-        _Quads = new GameObject[100];
+        _Quads = new GameObject[_numberOfQuads];
         TargetQua = new Quaternion[_Quads.Length];
         webCamTexture = new WebCamTexture();
         isLerping = new bool[_Quads.Length];
@@ -48,7 +49,7 @@ public class WebCameraFeed2 : MonoBehaviour
         webCamTexture.Play();
         for (int i = 0, x = 0, y = 0,uvY = -1 ; i < _Quads.Length; i++)
         {
-            if (i % 10 == 0)
+            if (i % Mathf.Sqrt(_numberOfQuads) == 0)
             {
                 y++;
                 x = 0;
