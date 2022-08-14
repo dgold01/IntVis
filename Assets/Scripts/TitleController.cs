@@ -64,8 +64,12 @@ public class TitleController : MonoBehaviour
 
             if (_allFin == true)
             {
-              canvas.SetActive(true);
-              if(Input.GetMouseButtonDown(0))
+                if(finished != true)
+                {
+                    canvas.SetActive(true);
+                }
+              
+                if(Input.GetMouseButtonDown(0))
                 {
                     _balls[i].GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-100,100), Random.Range(-100, 100), Random.Range(-100, 100)).normalized * 10;
                     finished = true;
