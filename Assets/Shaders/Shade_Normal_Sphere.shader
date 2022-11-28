@@ -88,9 +88,9 @@ Shader "Unlit/Shade_V1"
             {
 
 
-                float2 uv = o.uv0 * 1/10;
-                uv.x = uv.x + _numx * 1 / 10;
-                uv.y = uv.y + _numy * 1 / 10;
+                float2 uv = o.uv0 * 1/100;
+                uv.x = uv.x + _numx * 1 / 100;
+                uv.y = uv.y + _numy * 1 / 100;
                 uv.x = 1 - uv.x;
                 //uv = uv + Amplitude;
                 //uv.x = uv.x + 1/10 * _num;
@@ -136,7 +136,7 @@ Shader "Unlit/Shade_V1"
                 float3 diffuseLight = ambientLight + difuseLight;
                 float3 finalsurfacecol = diffuseLight * _MainTex_ST + directSpecular;
                 //WebCamera
-                float2 delta = float2(Amplitude*0.05, Amplitude*0.05);
+                float2 delta = float2(0.002, 0.002);
 
                 float4 hr = float4(0, 0, 0, 0);
                 float4 vt = float4(0, 0, 0, 0);
@@ -165,8 +165,8 @@ Shader "Unlit/Shade_V1"
 
                 float4 ColorS = float4(Amplitude/10-0.4, Amplitude/10+0.5, Amplitude + 0.3,0);
 
-                fixed4 col = sqrt(hr * hr + vt * vt);
-                //fixed4 col = tex2D(_MainTex, uv);
+                //fixed4 col = sqrt(hr * hr + vt * vt);
+                fixed4 col = tex2D(_MainTex, uv);
                 return col * ColorS ;
                 //return float4(finalsurfacecol,0);
             }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class WebCameraFeed2 : MonoBehaviour
 {
 
-    
+
     Vector3[] TargetPos;
     Quaternion[] TargetQua;
     Vector3[] OriginPos;
@@ -26,6 +26,7 @@ public class WebCameraFeed2 : MonoBehaviour
     bool[] isLerping;
     bool _isLerpingAll;
     public int _numberOfQuads;
+    public float zlocalDistance;
 
     public float _Speed;
     [Header("3D Settings")]
@@ -37,17 +38,29 @@ public class WebCameraFeed2 : MonoBehaviour
 
     void Start()
     {
+
+
+        webCamTexture = new WebCamTexture();
+        webCamTexture.Play();
+
+        CreateObjects();
+
+
+
+    }
+    void CreateObjects()
+    {
         _Quads = new GameObject[_numberOfQuads];
         TargetQua = new Quaternion[_Quads.Length];
-        webCamTexture = new WebCamTexture();
+        
         isLerping = new bool[_Quads.Length];
         TargetPos = new Vector3[_Quads.Length];
         OriginPos = new Vector3[_Quads.Length];
 
         //gameObject.GetComponent<MeshRenderer>().material.mainTexture = webCamTexture;
         //object1.GetComponent<MeshRenderer>().material.mainTexture = webCamTexture;
-        webCamTexture.Play();
-        for (int i = 0, x = 0, y = 0,uvY = -1 ; i < _Quads.Length; i++)
+        
+        for (int i = 0, x = 0, y = 0, uvY = -1; i < _Quads.Length; i++)
         {
             if (i % Mathf.Sqrt(_numberOfQuads) == 0)
             {
@@ -57,22 +70,31 @@ public class WebCameraFeed2 : MonoBehaviour
             }
             GameObject newQuad = Instantiate(ObjectToSpawn);
             newQuad.transform.parent = _Set.transform;
-            newQuad.transform.localPosition = new Vector3(x * _xSpacing, y * _ySpacing, 0);
+            newQuad.transform.localPosition = new Vector3(x * _xSpacing, y * _ySpacing, zlocalDistance);
             _Quads[i] = newQuad;
             TargetQua[i] = _Quads[i].transform.rotation;
+            TargetPos[i] = _Quads[i].transform.localPosition;
+            
             //newQuad.GetComponent<MeshRenderer>().material = new Material(newQuad.GetComponent<MeshRenderer>().material);
-            
-            
+
+
             newQuad.GetComponent<MeshRenderer>().material.SetFloat("_numx", x);
-            
+
             newQuad.GetComponent<MeshRenderer>().material.SetFloat("_numy", uvY);
 
             x++;
         }
+        if (_movePixel)
+        {
 
-        StartCoroutine(StartMovePixelsToCamera());
+            StartCoroutine(StartMovePixelsToCamera());
 
+        }
 
+    }
+    private void OnEnable()
+    {
+        CreateObjects();
     }
     private void Update()
     {
@@ -81,9 +103,6 @@ public class WebCameraFeed2 : MonoBehaviour
 
         for (int i = 0; i < _Quads.Length; i++)
         {
-
-
-
 
             _Quads[i].GetComponent<MeshRenderer>().material.mainTexture = webCamTexture;
 
@@ -173,6 +192,8 @@ public class WebCameraFeed2 : MonoBehaviour
                     m = 0;
                 }
 
+                
+                  
                 _Quads[i].transform.localPosition = TargetPos[i];
 
 

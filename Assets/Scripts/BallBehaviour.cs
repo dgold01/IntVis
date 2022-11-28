@@ -31,7 +31,7 @@ public class BallBehaviour : MonoBehaviour
             {   
                 gameObject.transform.position = hit.point;
                 GameObject _ball = Instantiate(objecttospawn);
-                _ball.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, _ball.transform.position.z);
+                _ball.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, gameObject.transform.parent.position.z);
                 _ball.transform.localScale = new Vector3(_ballsize, _ballsize, _ballsize);
                 Vector3 forcedir = -_ball.transform.position + hit.transform.position;
                 _ball.GetComponent<Rigidbody>().AddForce(_ball.transform.forward * _ballspeed);

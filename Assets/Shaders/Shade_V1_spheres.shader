@@ -136,7 +136,7 @@ Shader "Unlit/Shade_V1"
                 float3 diffuseLight = ambientLight + difuseLight;
                 float3 finalsurfacecol = diffuseLight * _MainTex_ST + directSpecular;
                 //WebCamera
-                float2 delta = float2(0.002, 0.002);
+                float2 delta = float2(Amplitude * 0.05, Amplitude * 0.05);
 
                 float4 hr = float4(0, 0, 0, 0);
                 float4 vt = float4(0, 0, 0, 0);

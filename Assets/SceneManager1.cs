@@ -32,10 +32,10 @@ public class SceneManager1 : MonoBehaviour
     {
         
        
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
             SceneManager.LoadScene(1);
             yield return new WaitForSeconds(0.5f);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(1));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("SecondScene"));
             SceneManager.UnloadSceneAsync(0);
             
     }
